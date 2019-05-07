@@ -1,0 +1,83 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 564
+  ClientWidth = 652
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Memo1: TMemo
+    Left = 0
+    Top = 416
+    Width = 652
+    Height = 129
+    Align = alBottom
+    TabOrder = 0
+  end
+  object DBGrid1: TDBGrid
+    Left = 0
+    Top = 0
+    Width = 652
+    Height = 416
+    Align = alClient
+    DataSource = DataSource1
+    TabOrder = 1
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 545
+    Width = 652
+    Height = 19
+    Panels = <>
+    ExplicitTop = 551
+    ExplicitWidth = 463
+  end
+  object IdUDPServer1: TIdUDPServer
+    OnStatus = IdUDPServer1Status
+    BroadcastEnabled = True
+    Bindings = <>
+    DefaultPort = 8080
+    OnUDPRead = IdUDPServer1UDPRead
+    Left = 48
+    Top = 56
+  end
+  object ADOConnection1: TADOConnection
+    Connected = True
+    ConnectionString = 
+      'Provider=SQLNCLI.1;Password=X!wszdls403;Persist Security Info=Tr' +
+      'ue;User ID=sa;Initial Catalog=RunsData;Data Source=222.195.226.1' +
+      '40'
+    LoginPrompt = False
+    Provider = 'SQLNCLI.1'
+    Left = 120
+    Top = 56
+  end
+  object ADOQuery1: TADOQuery
+    Active = True
+    Connection = ADOConnection1
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select top 100 * from airs order by AirID DESC')
+    Left = 184
+    Top = 56
+  end
+  object DataSource1: TDataSource
+    DataSet = ADOQuery1
+    Left = 232
+    Top = 56
+  end
+end

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2017/12/14 08:40:10.000.215,=C:\Users\wangdong\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2017/12/14 08:41:44.000.528,C:\Users\wangdong\Desktop\单片机-环境检测程序\EMT_UDPServer\Unit1.dfm=C:\Users\wangdong\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2017/12/14 08:41:44.000.528,C:\Users\wangdong\Desktop\单片机-环境检测程序\EMT_UDPServer\Unit1.pas=C:\Users\wangdong\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2017/12/14 08:41:52.000.056,C:\Users\wangdong\Desktop\单片机-环境检测程序\EMT_UDPServer\EMTServer.dproj=C:\Users\wangdong\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

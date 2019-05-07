@@ -1,0 +1,87 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, IdBaseComponent, IdComponent, IdUDPBase,
+  IdUDPServer, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, IdGlobal,
+  IdSocketHandle, Vcl.ComCtrls, Data.Win.ADODB;
+
+type
+  TForm1 = class(TForm)
+    IdUDPServer1: TIdUDPServer;
+    Memo1: TMemo;
+    DBGrid1: TDBGrid;
+    StatusBar1: TStatusBar;
+    ADOConnection1: TADOConnection;
+    ADOQuery1: TADOQuery;
+    DataSource1: TDataSource;
+    procedure FormCreate(Sender: TObject);
+    procedure IdUDPServer1UDPRead(AThread: TIdUDPListenerThread;
+      const AData: TIdBytes; ABinding: TIdSocketHandle);
+    procedure IdUDPServer1Status(ASender: TObject; const AStatus: TIdStatus;
+      const AStatusText: string);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  IdUDPServer1.DefaultPort:= 8080;
+  IdUDPServer1.Active:= true;
+end;
+
+procedure TForm1.IdUDPServer1Status(ASender: TObject; const AStatus: TIdStatus;
+  const AStatusText: string);
+begin
+  Statusbar1.SimpleText:=AStatusText;
+end;
+
+procedure TForm1.IdUDPServer1UDPRead(AThread: TIdUDPListenerThread;
+  const AData: TIdBytes; ABinding: TIdSocketHandle);
+var
+  str:string;
+  strcnt:integer;
+  ts:TStringList;
+begin
+  str:=Trim(BytesToString(AData));
+  str:=StringReplace(str,'AirInspection:','',[rfReplaceAll]);
+  if length(str)>0 then
+  begin
+    if Memo1.Lines.Count>50 then
+      Memo1.Clear;
+    Memo1.Lines.Add(str);
+    ts:=TStringList.Create;
+    try
+      strcnt:=ExtractStrings(['|'],[' '],PChar(str),ts);
+      if strcnt=8 then
+      begin
+        Adoquery1.Append;
+        Adoquery1.FieldValues['DeviceID']:=ts[0];
+        Adoquery1.FieldValues['PM1']:=ts[1];
+        Adoquery1.FieldValues['PM25']:=ts[2];
+        Adoquery1.FieldValues['PM10']:=ts[3];
+        Adoquery1.FieldValues['Temperature']:=ts[4];
+        Adoquery1.FieldValues['Humidity']:=ts[5];
+        Adoquery1.FieldValues['CO2']:=ts[6];
+        Adoquery1.FieldValues['InspectTime']:=ts[7];
+        Adoquery1.Post;
+
+      end;
+    finally
+      ts.Free;
+    end;
+  end;
+end;
+
+end.
